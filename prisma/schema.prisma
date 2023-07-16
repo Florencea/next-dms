@@ -7,8 +7,9 @@ datasource db {
   url      = "file:./db.sqlite"
 }
 
-model User {
+model user {
   id        Int      @id() @default(autoincrement())
+  uuid      String   @unique @default(uuid())
   account   String   @unique
   password  String
   username  String
@@ -19,7 +20,7 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-model Record {
+model record {
   id         Int      @id() @default(autoincrement())
   stringCol1 String?
   stringCol2 String?
