@@ -97,3 +97,12 @@ export const ApiResponse = {
   redirect,
   error,
 };
+
+export const apiHandler = async (handler: () => Promise<Response>) => {
+  try {
+    return await handler();
+  } catch (err) {
+    const msg = (err as Error)?.message ?? "伺服器發生錯誤";
+    return ApiResponse.error(500, new Error(msg));
+  }
+};

@@ -1,9 +1,9 @@
 import { NextRequest } from "next/server";
-import { ApiResponse } from "../../../lib/api";
+import { ApiResponse, apiHandler } from "../../../lib/api";
 import { getJwt } from "../../../lib/user";
 
 export async function POST(req: NextRequest) {
-  try {
+  return await apiHandler(async () => {
     const { account = null, password = null } = await req.json();
     if (account === null || password === null) {
       return ApiResponse.error(400, new Error("請輸入帳號密碼"));
@@ -18,8 +18,5 @@ export async function POST(req: NextRequest) {
         );
       }
     }
-  } catch (err) {
-    const msg = (err as Error)?.message ?? "伺服器發生錯誤";
-    return ApiResponse.error(500, new Error(msg));
-  }
+  });
 }
