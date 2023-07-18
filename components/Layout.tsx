@@ -12,6 +12,7 @@ import useAuth from "../hooks/useAuth";
 interface Props {
   children?: React.ReactNode;
   isAdmin?: boolean;
+  username?: string;
 }
 
 const allMenuItems = [
@@ -35,7 +36,7 @@ const allMenuItems = [
   },
 ];
 
-export const Layout = ({ children, isAdmin = false }: Props) => {
+export const Layout = ({ children, isAdmin = false, username }: Props) => {
   const menuItems = isAdmin
     ? allMenuItems.map(({ needAdmin, ...rest }) => rest)
     : allMenuItems
@@ -48,7 +49,8 @@ export const Layout = ({ children, isAdmin = false }: Props) => {
     <div className="w-full h-screen flex flex-col">
       <header className="flex justify-between items-stretch py-3 px-5">
         <h1 className="text-lg font-bold">{process.env.NEXT_PUBLIC_TITLE}</h1>
-        <div>
+        <div className="flex justify-start items-center gap-3">
+          <span className="font-bold">{username}</span>
           <Button
             type="ghost"
             onClick={() => {

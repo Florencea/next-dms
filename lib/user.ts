@@ -23,6 +23,28 @@ export const getUserUuid = async () => {
   }
 };
 
+export const getUserUsername = async () => {
+  try {
+    const cookieStore = cookies();
+    const jwt = cookieStore.get("token");
+    if (!jwt) {
+      return "";
+    } else {
+      const token = jwt.value;
+      const { payload } = await jose.jwtVerify(token, secret);
+      const userUuid = `${payload.sub}`;
+      const user = await prisma.user.findUnique({
+        where: { uuid: userUuid },
+        select: { username: true },
+      });
+      const username = user?.username ?? "";
+      return username;
+    }
+  } catch (e) {
+    return "";
+  }
+};
+
 export const getJwt = async (account: string, password: string) => {
   try {
     const user = await prisma.user.findUnique({ where: { account } });
@@ -33,12 +55,12 @@ export const getJwt = async (account: string, password: string) => {
       if (!isPasswordMatch) {
         return null;
       } else {
-        const jwt = await new jose.SignJWT({ sub: user.uuid })
+        const token = await new jose.SignJWT({ sub: user.uuid })
           .setProtectedHeader({ alg: "HS256" })
           .setIssuedAt()
           .setExpirationTime("1d")
           .sign(secret);
-        return jwt;
+        return { token, userUuid: user.uuid };
       }
     }
   } catch (e) {

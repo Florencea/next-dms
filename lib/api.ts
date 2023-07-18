@@ -11,7 +11,7 @@ export interface ErrorResponseT {
   stack: string;
 }
 
-interface PaginatedDataT<DataT> {
+export interface PaginatedDataT<DataT> {
   list: DataT[];
   total: number;
 }
@@ -134,11 +134,11 @@ const removeCookie = (cookieKey: string): NextResponse<ApiResponseT<null>> => {
 export const operationLogger = async (
   req: NextRequest,
   description: string,
+  userUuid?: string,
 ) => {
   const ip = `${req.headers.get("x-forwarded-for")}`;
   const method = req.method;
   const path = req.nextUrl.pathname;
-  const userUuid = await getUserUuid();
   if (userUuid) {
     await prisma.log.create({
       data: {
@@ -149,6 +149,19 @@ export const operationLogger = async (
         userUuid,
       },
     });
+  } else {
+    const userUuidFromDb = await getUserUuid();
+    if (userUuidFromDb) {
+      await prisma.log.create({
+        data: {
+          ip,
+          method,
+          path,
+          description,
+          userUuid: userUuidFromDb,
+        },
+      });
+    }
   }
 };
 
@@ -167,6 +180,13 @@ export const apiHandler = async (handler: () => Promise<Response>) => {
   } catch (err) {
     const msg = (err as Error)?.message ?? "伺服器發生錯誤";
     return ApiResponse.error(500, new Error(msg));
+  }
+};
+
+export const AutoLogin = async () => {
+  const user = await getUserUuid();
+  if (user) {
+    nextRedirect(DEFAULT_PRIVATE_ROUTE);
   }
 };
 
