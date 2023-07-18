@@ -12,6 +12,9 @@ export const LoginForm = () => {
   } = useAuth();
   return (
     <Card className="animate-fade-in-up">
+      <h1 className="text-lg font-bold w-full text-center mb-5">
+        {process.env.NEXT_PUBLIC_TITLE}
+      </h1>
       <Form {...formProps}>
         <Form.Item {...formItemProps.account}>
           <Input ref={autoFocusRef} />

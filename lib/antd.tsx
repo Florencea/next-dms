@@ -28,6 +28,7 @@ export const AntdProvider = ({ children }: { children: React.ReactNode }) => {
             colorLinkActive: PRIMARY_COLOR,
           },
         }}
+        autoInsertSpaceInButton={false}
       >
         <QueryProvider>
           <App>{children}</App>
