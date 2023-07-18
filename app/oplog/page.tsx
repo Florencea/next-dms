@@ -1,5 +1,5 @@
 import { Layout } from "../../components/Layout";
-import { LogTable } from "../../components/LogTable";
+import { LogPage } from "../../components/LogPage";
 import { AntdProvider } from "../../lib/antd";
 import { NeedAdmin, NeedLogin } from "../../lib/api";
 import { checkUserIsAdmin, getUserUsername } from "../../lib/user";
@@ -12,7 +12,9 @@ export default async function Log() {
   return (
     <AntdProvider>
       <Layout isAdmin={isAdmin} username={username}>
-        <LogTable />
+        <div className="flex flex-col gap-3">
+          <LogPage />
+        </div>
       </Layout>
     </AntdProvider>
   );

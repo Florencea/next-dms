@@ -1,10 +1,14 @@
+"use client";
+
 import { log } from "@prisma/client";
 import { useSetState } from "ahooks";
 import { TableProps, Tag } from "antd";
+import { Dayjs } from "dayjs";
 import { useMemo } from "react";
 import { PaginatedDataT } from "../lib/api";
 import { LogParamsT } from "../lib/log";
 import useGet from "./query/useGet";
+import useForm from "./util/useForm";
 import useRender from "./util/useRender";
 
 type LogT = Pick<
@@ -20,7 +24,10 @@ const DEFAULT_PARAMS: LogParamsT = {
 const useLog = () => {
   const { renderDate, renderText } = useRender();
   const [params, setParams] = useSetState<LogParamsT>(DEFAULT_PARAMS);
-  const { data, isLoading } = useGet<PaginatedDataT<LogT>>({ url: "/log" });
+  const { data, isLoading } = useGet<PaginatedDataT<LogT>>({
+    url: "/oplog",
+    params,
+  });
   const tableProps: TableProps<LogT> = useMemo(
     () => ({
       rowKey: "uuid",
@@ -83,7 +90,61 @@ const useLog = () => {
       setParams,
     ],
   );
-  return { tableProps, isLoading };
+  const form = useForm<
+    Omit<LogParamsT, "current" | "pageSize"> & {
+      period?: [Dayjs | null, Dayjs | null];
+    }
+  >(
+    {
+      initialValues: {
+        method: "",
+      },
+      layout: "inline",
+      onFinish: (values) => {
+        const [startDate, endDate] = values?.period ?? [null, null];
+        const start = startDate?.toISOString();
+        const end = endDate?.toISOString();
+        const { ip, method, keyword, account } = values;
+        setParams({
+          ...DEFAULT_PARAMS,
+          ip: ip === "" ? undefined : ip,
+          method: method === "" ? undefined : method,
+          keyword: keyword === "" ? undefined : keyword,
+          account: account === "" ? undefined : account,
+          start,
+          end,
+        });
+      },
+    },
+    {
+      ip: {
+        name: "ip",
+        label: "IP",
+        rules: [{ required: false }],
+      },
+      method: {
+        name: "method",
+        label: "請求方法",
+        rules: [{ required: false }],
+      },
+      account: {
+        name: "account",
+        label: "帳號",
+        rules: [{ required: false }],
+      },
+      keyword: {
+        name: "keyword",
+        label: "關鍵字",
+        rules: [{ required: false }],
+      },
+      period: {
+        name: "period",
+        label: "期間",
+        rules: [{ required: false }],
+      },
+    },
+  );
+  return { tableProps, isLoading, form };
 };
 
 export default useLog;

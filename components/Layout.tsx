@@ -29,7 +29,7 @@ const allMenuItems = [
     needAdmin: true,
   },
   {
-    key: "/log",
+    key: "/oplog",
     label: "存取紀錄管理",
     icon: <HistoryOutlined />,
     needAdmin: true,
