@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { redirect as nextRedirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "./prisma";
-import { getUserUuid } from "./user";
+import { checkUserIsAdmin, getUserUuid } from "./user";
 
 export interface ErrorResponseT {
   name: string;
@@ -174,5 +174,12 @@ export const NeedLogin = async () => {
   const user = await getUserUuid();
   if (!user) {
     nextRedirect(DEAFULT_PUBLIC_ROUTE);
+  }
+};
+
+export const NeedAdmin = async () => {
+  const isAdmin = await checkUserIsAdmin();
+  if (!isAdmin) {
+    redirect(DEFAULT_PRIVATE_ROUTE);
   }
 };
