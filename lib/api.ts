@@ -1,5 +1,7 @@
 import dayjs from "dayjs";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import prisma from "./prisma";
+import { getUserUuid } from "./user";
 
 interface ErrorResponseT {
   name: string;
@@ -89,6 +91,27 @@ const redirect = (Location: string, cookieStr?: string) => {
         }
       : { Location },
   });
+};
+
+export const operationLogger = async (
+  req: NextRequest,
+  description: string,
+) => {
+  const ip = req.ip;
+  const method = req.method;
+  const path = req.url;
+  const userUuid = await getUserUuid();
+  if (userUuid) {
+    await prisma.log.create({
+      data: {
+        ip,
+        method,
+        path,
+        description,
+        userUuid,
+      },
+    });
+  }
 };
 
 export const ApiResponse = {

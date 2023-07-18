@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { ApiResponse, apiHandler } from "../../../lib/api";
+import { ApiResponse, apiHandler, operationLogger } from "../../../lib/api";
 import { getJwt } from "../../../lib/user";
 
 export async function POST(req: NextRequest) {
@@ -12,6 +12,7 @@ export async function POST(req: NextRequest) {
       if (token === null) {
         return ApiResponse.error(401, new Error("不正確的帳號密碼"));
       } else {
+        await operationLogger(req, "使用者登入");
         return ApiResponse.redirect(
           "/record",
           `token=${token}; HttpOnly; Path=/`,
