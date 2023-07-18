@@ -13,10 +13,7 @@ export async function POST(req: NextRequest) {
         return ApiResponse.error(401, new Error("不正確的帳號密碼"));
       } else {
         await operationLogger(req, "使用者登入");
-        return ApiResponse.redirect(
-          "/record",
-          `token=${token}; HttpOnly; Path=/`,
-        );
+        return ApiResponse.setCookie(`token=${token}; HttpOnly; Path=/`);
       }
     }
   });

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "./prisma";
 import { getUserUuid } from "./user";
 
-interface ErrorResponseT {
+export interface ErrorResponseT {
   name: string;
   message: string;
   cause: string;
@@ -15,10 +15,10 @@ interface PaginatedDataT<DataT> {
   total: number;
 }
 
-interface ApiResponseT<DataT> {
+export interface ApiResponseT<DataT> {
   code: string;
   timestamp: string;
-  msg: string;
+  message: string;
   success: boolean;
   data: DataT;
 }
@@ -33,7 +33,7 @@ const list = <DataT>(
     {
       code: "200",
       timestamp: now(),
-      msg: "success",
+      message: "success",
       success: true,
       data: {
         list: data,
@@ -49,7 +49,7 @@ const item = <DataT>(data: DataT): NextResponse<ApiResponseT<DataT>> => {
     {
       code: "200",
       timestamp: now(),
-      msg: "success",
+      message: "success",
       success: true,
       data,
     },
@@ -65,7 +65,7 @@ const error = (
     {
       code: `${code}`,
       timestamp: now(),
-      msg: err.message,
+      message: err.message,
       success: false,
       data:
         process.env.NODE_ENV === "development"
@@ -81,25 +81,58 @@ const error = (
   );
 };
 
-const redirect = (Location: string, cookieStr?: string) => {
+const redirect = (Location: string) => {
   return new Response(null, {
     status: 302,
-    headers: cookieStr
-      ? {
-          Location,
-          "Set-Cookie": cookieStr,
-        }
-      : { Location },
+    headers: { Location },
   });
+};
+
+const setCookie = (cookieStr: string): NextResponse<ApiResponseT<null>> => {
+  return NextResponse.json(
+    {
+      code: "200",
+      timestamp: now(),
+      message: "success",
+      success: true,
+      data: null,
+    },
+    {
+      status: 200,
+      statusText: "ok",
+      headers: {
+        "Set-Cookie": cookieStr,
+      },
+    },
+  );
+};
+
+const removeCookie = (cookieKey: string): NextResponse<ApiResponseT<null>> => {
+  return NextResponse.json(
+    {
+      code: "200",
+      timestamp: now(),
+      message: "success",
+      success: true,
+      data: null,
+    },
+    {
+      status: 200,
+      statusText: "ok",
+      headers: {
+        "Set-Cookie": `${cookieKey}=deleted; HttpOnly; Path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`,
+      },
+    },
+  );
 };
 
 export const operationLogger = async (
   req: NextRequest,
   description: string,
 ) => {
-  const ip = req.ip;
+  const ip = `${req.headers.get("x-forwarded-for")}`;
   const method = req.method;
-  const path = req.url;
+  const path = req.nextUrl.pathname;
   const userUuid = await getUserUuid();
   if (userUuid) {
     await prisma.log.create({
@@ -118,6 +151,8 @@ export const ApiResponse = {
   list,
   item,
   redirect,
+  setCookie,
+  removeCookie,
   error,
 };
 
