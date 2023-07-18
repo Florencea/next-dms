@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 export default {
+  safelist: ["animate-shake-x"],
   content: [
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",

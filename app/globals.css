@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ant-form-item-has-error {
+  animation: shake-x 0.3s ease-out;
+}
+
+@keyframes shake-x {
+  from,
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%,
+  50%,
+  90% {
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  30%,
+  70% {
+    transform: translate3d(10px, 0, 0);
+  }
+}

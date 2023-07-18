@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { redirect as nextRedirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "./prisma";
 import { getUserUuid } from "./user";
@@ -22,6 +23,10 @@ export interface ApiResponseT<DataT> {
   success: boolean;
   data: DataT;
 }
+
+export const DEAFULT_PUBLIC_ROUTE = "/login";
+
+export const DEFAULT_PRIVATE_ROUTE = "/record";
 
 const now = () => dayjs().toISOString();
 
@@ -162,5 +167,12 @@ export const apiHandler = async (handler: () => Promise<Response>) => {
   } catch (err) {
     const msg = (err as Error)?.message ?? "伺服器發生錯誤";
     return ApiResponse.error(500, new Error(msg));
+  }
+};
+
+export const NeedLogin = async () => {
+  const user = await getUserUuid();
+  if (!user) {
+    nextRedirect(DEAFULT_PUBLIC_ROUTE);
   }
 };

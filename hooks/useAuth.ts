@@ -41,7 +41,7 @@ const useAuth = () => {
       },
     },
   );
-  return { form, Logout };
+  return { form, Logout, Login };
 };
 
 export default useAuth;
