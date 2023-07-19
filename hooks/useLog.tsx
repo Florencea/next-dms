@@ -2,10 +2,10 @@
 
 import { log } from "@prisma/client";
 import { useSetState } from "ahooks";
-import { TableProps, Tag } from "antd";
+import { PaginationProps, TableProps, Tag } from "antd";
 import { Dayjs } from "dayjs";
 import { useMemo } from "react";
-import { PaginatedDataT } from "../lib/api";
+import { OptionT, PaginatedDataT } from "../lib/api";
 import { LogParamsT } from "../lib/log";
 import useGet from "./query/useGet";
 import useForm from "./util/useForm";
@@ -16,6 +16,15 @@ type LogT = Pick<
   "uuid" | "createdAt" | "ip" | "method" | "path" | "description"
 > & { username: string; account: string };
 
+const DEFAULT_PAGINATION_PROPS: PaginationProps = {
+  showSizeChanger: true,
+  showTotal: (total, [start, end]) =>
+    `目前是 ${total} 筆中的 第 ${start} 筆到第 ${end} 筆`,
+  locale: {
+    items_per_page: "筆/頁",
+  },
+};
+
 const DEFAULT_PARAMS: LogParamsT = {
   current: 1,
   pageSize: 10,
@@ -24,6 +33,12 @@ const DEFAULT_PARAMS: LogParamsT = {
 const useLog = () => {
   const { renderDate, renderText } = useRender();
   const [params, setParams] = useSetState<LogParamsT>(DEFAULT_PARAMS);
+  const { data: userOptionData } = useGet<PaginatedDataT<OptionT>>({
+    url: "/options/user",
+  });
+  const { data: ipOptionData } = useGet<PaginatedDataT<OptionT>>({
+    url: "/options/ip",
+  });
   const { data, isLoading } = useGet<PaginatedDataT<LogT>>({
     url: "/oplog",
     params,
@@ -73,6 +88,7 @@ const useLog = () => {
       dataSource: data?.data?.list ?? [],
       loading: isLoading,
       pagination: {
+        ...DEFAULT_PAGINATION_PROPS,
         current: params.current,
         total: data?.data?.total ?? 0,
         onChange: (current, pageSize) => {
@@ -96,9 +112,6 @@ const useLog = () => {
     }
   >(
     {
-      initialValues: {
-        method: "",
-      },
       layout: "inline",
       onFinish: (values) => {
         const [startDate, endDate] = values?.period ?? [null, null];
@@ -124,12 +137,12 @@ const useLog = () => {
       },
       method: {
         name: "method",
-        label: "請求方法",
+        label: "路由請求方法",
         rules: [{ required: false }],
       },
       account: {
         name: "account",
-        label: "帳號",
+        label: "使用者名稱",
         rules: [{ required: false }],
       },
       keyword: {
@@ -144,7 +157,13 @@ const useLog = () => {
       },
     },
   );
-  return { tableProps, isLoading, form };
+  return {
+    tableProps,
+    isLoading,
+    form,
+    userOptions: userOptionData?.data?.list ?? [],
+    ipOptions: ipOptionData?.data?.list ?? [],
+  };
 };
 
 export default useLog;

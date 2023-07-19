@@ -11,6 +11,11 @@ export interface ErrorResponseT {
   stack: string;
 }
 
+export interface OptionT<T = string> {
+  label: string;
+  value: T;
+}
+
 export interface PaginatedDataT<DataT> {
   list: DataT[];
   total: number;
@@ -174,8 +179,20 @@ export const ApiResponse = {
   error,
 };
 
-export const apiHandler = async (handler: () => Promise<Response>) => {
+export const apiHandler = async (
+  handler: () => Promise<Response>,
+  {
+    needLogin = true,
+    needAdmin = false,
+  }: { needLogin: boolean; needAdmin: boolean },
+) => {
   try {
+    if (needLogin) {
+      NeedLoginApi();
+    }
+    if (needAdmin) {
+      NeedAdminApi();
+    }
     return await handler();
   } catch (err) {
     const msg = (err as Error)?.message ?? "伺服器發生錯誤";
@@ -197,9 +214,23 @@ export const NeedLogin = async () => {
   }
 };
 
+export const NeedLoginApi = async () => {
+  const user = await getUserUuid();
+  if (!user) {
+    return ApiResponse.error(401, new Error("請先登入"));
+  }
+};
+
 export const NeedAdmin = async () => {
   const isAdmin = await checkUserIsAdmin();
   if (!isAdmin) {
     redirect(DEFAULT_PRIVATE_ROUTE);
+  }
+};
+
+export const NeedAdminApi = async () => {
+  const isAdmin = await checkUserIsAdmin();
+  if (!isAdmin) {
+    return ApiResponse.error(403, new Error("無此功能權限"));
   }
 };

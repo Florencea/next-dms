@@ -15,7 +15,7 @@ export default {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        primary: "#722ed1",
+        primary: "#2f54eb",
       },
       animation: {
         "fade-in-up": "fade-in-up 0.2s ease-out",

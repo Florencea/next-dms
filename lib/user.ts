@@ -45,6 +45,23 @@ export const getUserUsername = async () => {
   }
 };
 
+export const getUserOptions = async () => {
+  try {
+    const users = await prisma.user.findMany({
+      where: { enabled: true },
+      select: { username: true, uuid: true },
+    });
+    const data = users.map(({ uuid, username }) => ({
+      label: username,
+      value: uuid,
+    }));
+    const total = data.length;
+    return { data, total };
+  } catch (e) {
+    return { data: [], total: 0 };
+  }
+};
+
 export const getJwt = async (account: string, password: string) => {
   try {
     const user = await prisma.user.findUnique({ where: { account } });

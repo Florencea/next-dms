@@ -13,17 +13,9 @@ export interface LogParamsT {
 
 export const getLogList = async (params: LogParamsT) => {
   const query = {
+    ip: params.ip,
+    method: params.method,
     OR: [
-      {
-        ip: {
-          contains: params.ip,
-        },
-      },
-      {
-        method: {
-          contains: params.method,
-        },
-      },
       {
         path: {
           contains: params.keyword,
@@ -34,34 +26,11 @@ export const getLogList = async (params: LogParamsT) => {
           contains: params.keyword,
         },
       },
-      {
-        user: {
-          OR: [
-            {
-              account: {
-                contains: params.account,
-              },
-            },
-            {
-              account: {
-                contains: params.keyword,
-              },
-            },
-            {
-              username: {
-                contains: params.keyword,
-              },
-            },
-          ],
-        },
-      },
-      {
-        createdAt: {
-          gte: new Date(params.start ?? "1900-01-01"),
-          lte: new Date(params.end ?? "2999-12-31"),
-        },
-      },
     ],
+    createdAt: {
+      gte: new Date(params.start ?? "1900-01-01"),
+      lte: new Date(params.end ?? "2999-12-31"),
+    },
   };
   const total = await prisma.log.count({
     where: query,
@@ -94,4 +63,21 @@ export const getLogList = async (params: LogParamsT) => {
     account,
   }));
   return { total, data };
+};
+
+export const getIpOptions = async () => {
+  try {
+    const users = await prisma.log.findMany({
+      select: { ip: true },
+      distinct: ["ip"],
+    });
+    const data = users.map(({ ip }) => ({
+      label: ip,
+      value: ip,
+    }));
+    const total = data.length;
+    return { data, total };
+  } catch (e) {
+    return { data: [], total: 0 };
+  }
 };
