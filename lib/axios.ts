@@ -30,11 +30,11 @@ export const $post = async <DataT = unknown, ReqT = unknown>(
   return res.data;
 };
 
-export const $put = async <DataT = unknown, ReqT = unknown>(
+export const $patch = async <DataT = unknown, ReqT = unknown>(
   axiosReqestConfig: AxiosRequestConfig<ReqT>,
 ) => {
   const res = await AXIOS_INSTANCE<ApiResponseT<DataT>>({
-    method: "PUT",
+    method: "PATCH",
     ...axiosReqestConfig,
   });
   return res.data;

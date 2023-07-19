@@ -1,9 +1,9 @@
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
 import { AxiosRequestConfig } from "axios";
 import { ApiResponseT, ErrorResponseT } from "../../lib/api";
-import { $put } from "../../lib/axios";
+import { $patch } from "../../lib/axios";
 
-const usePut = <DataT = unknown, ReqT = unknown>(
+const usePatch = <DataT = unknown, ReqT = unknown>(
   { url, params, ...axiosReqestConfig }: AxiosRequestConfig<ReqT>,
   useMutationOptions?: UseMutationOptions<
     ApiResponseT<DataT>,
@@ -14,7 +14,7 @@ const usePut = <DataT = unknown, ReqT = unknown>(
   useMutation({
     mutationKey: [url, params],
     mutationFn: (data) =>
-      $put<DataT>({ url, params, data, ...axiosReqestConfig }),
+      $patch<DataT>({ url, params, data, ...axiosReqestConfig }),
     ...useMutationOptions,
   } as UseMutationOptions<
     ApiResponseT<DataT>,
@@ -22,4 +22,4 @@ const usePut = <DataT = unknown, ReqT = unknown>(
     ReqT
   >);
 
-export default usePut;
+export default usePatch;
