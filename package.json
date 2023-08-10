@@ -9,12 +9,12 @@
     "db:init": "npx prisma db push && ts-node --skipProject prisma/init.ts"
   },
   "dependencies": {
-    "@ant-design/cssinjs": "^1.16.1",
+    "@ant-design/cssinjs": "^1.16.2",
     "@ant-design/icons": "^5.2.5",
     "@prisma/client": "^5.1.1",
     "@tanstack/react-query": "^4.32.6",
     "@types/node": "^20.4.9",
-    "@types/react": "^18.2.19",
+    "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "ahooks": "^3.7.8",
     "antd": "^5.8.2",
