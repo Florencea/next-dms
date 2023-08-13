@@ -52,7 +52,7 @@ export const Layout = ({ children, isAdmin = false, username }: Props) => {
         <div className="flex justify-start items-center gap-3">
           <span className="font-bold">{username}</span>
           <Button
-            type="ghost"
+            ghost
             onClick={() => {
               Logout.mutate({});
             }}
