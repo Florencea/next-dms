@@ -53,7 +53,6 @@ export const Layout = ({ children, isAdmin = false, username }: Props) => {
           <span className="font-bold">{username}</span>
           <Button
             type="text"
-            ghost
             onClick={() => {
               Logout.mutate({});
             }}
