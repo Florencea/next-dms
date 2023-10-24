@@ -11,7 +11,7 @@
   "dependencies": {
     "@ant-design/cssinjs": "^1.17.2",
     "@ant-design/icons": "^5.2.6",
-    "@prisma/client": "^5.4.2",
+    "@prisma/client": "^5.5.0",
     "@tanstack/react-query": "^5.0.5",
     "@types/node": "^20.8.8",
     "@types/react": "^18.2.31",
@@ -31,7 +31,7 @@
     "next": "^13.5.6",
     "postcss": "^8.4.31",
     "prettier": "^3.0.3",
-    "prisma": "^5.4.2",
+    "prisma": "^5.5.0",
     "radash": "^11.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
