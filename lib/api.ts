@@ -82,7 +82,7 @@ const error = (
           ? {
               name: err.name,
               message: err.message,
-              cause: `${err.cause}`,
+              cause: typeof err.cause === "string" ? `${err.cause}` : "unknown",
               stack: `${err.stack}`,
             }
           : null,
@@ -188,14 +188,15 @@ export const apiHandler = async (
 ) => {
   try {
     if (needLogin) {
-      NeedLoginApi();
+      await NeedLoginApi();
     }
     if (needAdmin) {
-      NeedAdminApi();
+      await NeedAdminApi();
     }
     return await handler();
   } catch (err) {
-    const msg = (err as Error)?.message ?? "伺服器發生錯誤";
+    const msg =
+      typeof err === "object" ? (err as Error).message : "伺服器發生錯誤";
     return ApiResponse.error(500, new Error(msg));
   }
 };

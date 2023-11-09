@@ -14,6 +14,7 @@ const useDelete = <DataT = unknown, ReqT = unknown>(
   useMutation({
     mutationKey: [url, params],
     mutationFn: (data) =>
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       $delete<DataT>({ url, params, data, ...axiosReqestConfig }),
     ...useMutationOptions,
   } as UseMutationOptions<

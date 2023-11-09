@@ -2,10 +2,15 @@ import { NextRequest } from "next/server";
 import { ApiResponse, apiHandler, operationLogger } from "../../../lib/api";
 import { getJwt } from "../../../lib/user";
 
+interface LoginT {
+  account?: string;
+  password?: string;
+}
+
 export async function POST(req: NextRequest) {
   return await apiHandler(
     async () => {
-      const { account = null, password = null } = await req.json();
+      const { account = null, password = null } = (await req.json()) as LoginT;
       if (account === null || password === null) {
         return ApiResponse.error(400, new Error("請輸入帳號密碼"));
       } else {

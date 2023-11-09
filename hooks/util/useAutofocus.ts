@@ -4,8 +4,8 @@ import { useEffect, useRef } from "react";
 const useAutofocus = () => {
   const autoFocusRef = useRef<InputRef>(null);
   useEffect(() => {
-    if (autoFocusRef) {
-      autoFocusRef.current!.focus({
+    if (autoFocusRef.current) {
+      autoFocusRef.current.focus({
         preventScroll: true,
         cursor: "all",
       });

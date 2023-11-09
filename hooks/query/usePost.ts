@@ -14,6 +14,7 @@ const usePost = <DataT = unknown, ReqT = unknown>(
   useMutation({
     mutationKey: [url, params],
     mutationFn: (data) =>
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       $post<DataT>({ url, params, data, ...axiosReqestConfig }),
     ...useMutationOptions,
   } as UseMutationOptions<

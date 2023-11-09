@@ -5,11 +5,10 @@ import { ErrorResponseT } from "../../lib/api";
 
 const useMsg = () => {
   const { message } = App.useApp();
-  const showError = (err: unknown) => {
+  const showError = async (err: unknown) => {
     const content =
-      (err as AxiosError<ErrorResponseT>)?.response?.data?.message ??
-      "發生錯誤";
-    message.open({
+      (err as AxiosError<ErrorResponseT>).response?.data.message ?? "發生錯誤";
+    await message.open({
       content,
       type: "error",
       duration: 4,

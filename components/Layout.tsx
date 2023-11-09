@@ -38,10 +38,14 @@ const allMenuItems = [
 
 export const Layout = ({ children, isAdmin = false, username }: Props) => {
   const menuItems = isAdmin
-    ? allMenuItems.map(({ needAdmin, ...rest }) => rest)
+    ? allMenuItems.map(({ key, label, icon }) => ({
+        key,
+        label,
+        icon,
+      }))
     : allMenuItems
         .filter((m) => !m.needAdmin)
-        .map(({ needAdmin, ...rest }) => rest);
+        .map(({ key, label, icon }) => ({ key, label, icon }));
   const pathname = usePathname();
   const router = useRouter();
   const { Logout } = useAuth();

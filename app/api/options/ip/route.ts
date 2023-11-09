@@ -1,8 +1,7 @@
-import { NextRequest } from "next/server";
 import { ApiResponse, apiHandler } from "../../../../lib/api";
 import { getIpOptions } from "../../../../lib/log";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   return await apiHandler(
     async () => {
       const { total, data } = await getIpOptions();

@@ -85,20 +85,20 @@ const useLog = () => {
           render: renderText,
         },
       ],
-      dataSource: data?.data?.list ?? [],
+      dataSource: data?.data.list ?? [],
       loading: isLoading,
       pagination: {
         ...DEFAULT_PAGINATION_PROPS,
         current: params.current,
-        total: data?.data?.total ?? 0,
+        total: data?.data.total ?? 0,
         onChange: (current, pageSize) => {
           setParams({ current, pageSize });
         },
       },
     }),
     [
-      data?.data?.list,
-      data?.data?.total,
+      data?.data.list,
+      data?.data.total,
       isLoading,
       params,
       renderDate,
@@ -114,7 +114,7 @@ const useLog = () => {
     {
       layout: "inline",
       onFinish: (values) => {
-        const [startDate, endDate] = values?.period ?? [null, null];
+        const [startDate, endDate] = values.period ?? [null, null];
         const start = startDate?.toISOString();
         const end = endDate?.toISOString();
         const { ip, method, keyword, account } = values;
@@ -161,8 +161,8 @@ const useLog = () => {
     tableProps,
     isLoading,
     form,
-    userOptions: userOptionData?.data?.list ?? [],
-    ipOptions: ipOptionData?.data?.list ?? [],
+    userOptions: userOptionData?.data.list ?? [],
+    ipOptions: ipOptionData?.data.list ?? [],
   };
 };
 
