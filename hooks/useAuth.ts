@@ -28,7 +28,7 @@ const useAuth = () => {
   );
   const form = useForm<LoginT>(
     {
-      disabled: Login.isLoading,
+      disabled: Login.isPending,
       onFinish: (values) => {
         Login.mutate(values);
       },

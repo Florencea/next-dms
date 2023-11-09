@@ -1,24 +1,20 @@
-import argon2 from "argon2";
-import prisma from "../lib/prisma";
+import prisma from ".";
 
 async function createDefaultUser() {
-  const hashedPassword = await argon2.hash("1qaz!QAZ");
   const DEFAULT_USER = {
     account: "admin",
-    password: hashedPassword,
+    password: "1qaz!QAZ",
     username: "Admin",
     isAdmin: true,
     isEditor: true,
   };
   await prisma.user.upsert({
-    create: DEFAULT_USER,
-    update: DEFAULT_USER,
     where: {
       account: DEFAULT_USER.account,
     },
+    create: DEFAULT_USER,
+    update: DEFAULT_USER,
   });
-  const allUsers = await prisma.user.findMany();
-  console.table(allUsers);
 }
 
 async function main() {

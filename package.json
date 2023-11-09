@@ -4,9 +4,9 @@
     "dev": "dotenv next dev",
     "build": "dotenv next build",
     "start": "dotenv next start",
-    "lint": "dotenv next lint",
+    "lint": "dotenv next lint && tsc",
     "format": "prettier '**/*' --write --ignore-unknown --cache",
-    "db:init": "npx prisma db push && ts-node --skipProject prisma/init.ts"
+    "migrate": "npx prisma migrate dev --name init && npx prisma db seed"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.17.2",
@@ -36,7 +36,10 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwindcss": "^3.3.5",
-    "ts-node": "^10.9.1",
+    "tsx": "^4.0.0",
     "typescript": "^5.2.2"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   }
 }

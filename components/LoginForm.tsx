@@ -7,7 +7,7 @@ import useAutofocus from "../hooks/util/useAutofocus";
 export const LoginForm = () => {
   const autoFocusRef = useAutofocus();
   const {
-    Login: { isLoading },
+    Login: { isPending },
     form: { formProps, formItemProps },
   } = useAuth();
   return (
@@ -22,7 +22,7 @@ export const LoginForm = () => {
         <Form.Item {...formItemProps.password}>
           <Input.Password />
         </Form.Item>
-        <Button type="primary" htmlType="submit" block disabled={isLoading}>
+        <Button type="primary" htmlType="submit" block disabled={isPending}>
           登入
         </Button>
       </Form>

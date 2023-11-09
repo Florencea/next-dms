@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { redirect as nextRedirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "./prisma";
+import prisma from "../prisma";
 import { checkUserIsAdmin, getUserUuid } from "./user";
 
 export interface ErrorResponseT {
