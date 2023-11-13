@@ -1,4 +1,7 @@
 {
+  "name": "next-dms",
+  "version": "1.0.0",
+  "type": "commonjs",
   "private": true,
   "scripts": {
     "dev": "dotenv next dev",
@@ -6,7 +9,7 @@
     "start": "dotenv next start",
     "lint": "dotenv next lint && tsc",
     "format": "prettier '**/*' --write --ignore-unknown --cache",
-    "migrate": "npx prisma migrate dev --name init && npx prisma db seed"
+    "migrate": "prisma migrate dev --name init"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.17.2",
