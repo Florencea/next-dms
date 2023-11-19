@@ -1,7 +1,6 @@
 {
   "name": "next-dms",
   "version": "1.0.0",
-  "type": "commonjs",
   "private": true,
   "scripts": {
     "dev": "dotenv next dev",
