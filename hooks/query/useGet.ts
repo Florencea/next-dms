@@ -1,6 +1,6 @@
-import { UseQueryOptions, useQuery } from "@tanstack/react-query";
-import { AxiosRequestConfig } from "axios";
-import { ApiResponseT } from "../../lib/api";
+import { type UseQueryOptions, useQuery } from "@tanstack/react-query";
+import type { AxiosRequestConfig } from "axios";
+import type { ApiResponseT } from "../../lib/api";
 import { $get } from "../../lib/axios";
 
 const useGet = <DataT = unknown>(

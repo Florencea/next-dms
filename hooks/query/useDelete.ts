@@ -1,6 +1,6 @@
-import { UseMutationOptions, useMutation } from "@tanstack/react-query";
-import { AxiosRequestConfig } from "axios";
-import { ApiResponseT, ErrorResponseT } from "../../lib/api";
+import { type UseMutationOptions, useMutation } from "@tanstack/react-query";
+import type { AxiosRequestConfig } from "axios";
+import type { ApiResponseT, ErrorResponseT } from "../../lib/api";
 import { $delete } from "../../lib/axios";
 
 const useDelete = <DataT = unknown, ReqT = unknown>(

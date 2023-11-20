@@ -1,12 +1,12 @@
 "use client";
 
-import { log } from "@prisma/client";
+import type { log } from "@prisma/client";
 import { useSetState } from "ahooks";
-import { PaginationProps, TableProps, Tag } from "antd";
-import { Dayjs } from "dayjs";
+import { type PaginationProps, type TableProps, Tag } from "antd";
+import type { Dayjs } from "dayjs";
 import { useMemo } from "react";
-import { OptionT, PaginatedDataT } from "../lib/api";
-import { LogParamsT } from "../lib/log";
+import type { OptionT, PaginatedDataT } from "../lib/api";
+import type { LogParamsT } from "../lib/log";
 import useGet from "./query/useGet";
 import useForm from "./util/useForm";
 import useRender from "./util/useRender";

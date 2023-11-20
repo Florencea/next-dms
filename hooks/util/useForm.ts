@@ -1,4 +1,9 @@
-import { Form, FormInstance, FormItemProps, FormProps } from "antd";
+import {
+  Form,
+  type FormInstance,
+  type FormItemProps,
+  type FormProps,
+} from "antd";
 import { nanoid } from "nanoid";
 
 type FormItemPropsT<T> = {

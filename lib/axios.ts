@@ -1,5 +1,5 @@
-import axios, { AxiosRequestConfig } from "axios";
-import { ApiResponseT } from "./api";
+import axios, { type AxiosRequestConfig } from "axios";
+import type { ApiResponseT } from "./api";
 
 const AXIOS_INSTANCE = axios.create({
   baseURL: "/api",

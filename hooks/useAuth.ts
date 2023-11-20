@@ -1,4 +1,4 @@
-import { user } from "@prisma/client";
+import type { user } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import usePost from "./query/usePost";
 import useForm from "./util/useForm";

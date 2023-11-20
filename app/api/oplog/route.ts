@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import { toInt } from "radash";
 import { ApiResponse, apiHandler } from "../../../lib/api";
 import { getLogList } from "../../../lib/log";
