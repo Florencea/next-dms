@@ -1,5 +1,6 @@
 "use client";
 
+import { SITE_TITLE } from "@/lib/constants";
 import { Button, Card, Form, Input } from "antd";
 import useAuth from "../hooks/useAuth";
 import useAutofocus from "../hooks/util/useAutofocus";
@@ -13,7 +14,7 @@ export const LoginForm = () => {
   return (
     <Card className="animate-fade-in-up">
       <h1 className="text-lg font-bold w-full text-center mb-5">
-        {process.env.NEXT_PUBLIC_TITLE}
+        {SITE_TITLE}
       </h1>
       <Form {...formProps}>
         <Form.Item {...formItemProps.account}>

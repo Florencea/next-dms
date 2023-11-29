@@ -1,5 +1,6 @@
 "use client";
 
+import { SITE_TITLE } from "@/lib/constants";
 import {
   FileSearchOutlined,
   HistoryOutlined,
@@ -52,7 +53,7 @@ export const Layout = ({ children, isAdmin = false, username }: Props) => {
   return (
     <div className="w-full h-screen flex flex-col">
       <header className="flex justify-between items-stretch py-3 px-5">
-        <h1 className="text-lg font-bold">{process.env.NEXT_PUBLIC_TITLE}</h1>
+        <h1 className="text-lg font-bold">{SITE_TITLE}</h1>
         <div className="flex justify-start items-center gap-3">
           <span className="font-bold">{username}</span>
           <Button

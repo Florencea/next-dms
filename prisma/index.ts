@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { userCreateExtesion } from "./extensions/user-create";
+import { userCreateExtesion } from "./extensions";
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;

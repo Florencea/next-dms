@@ -4,7 +4,6 @@ import {
   type FormItemProps,
   type FormProps,
 } from "antd";
-import { nanoid } from "nanoid";
 
 type FormItemPropsT<T> = {
   [K in keyof T]: FormItemProps<T> & {
@@ -27,7 +26,6 @@ const useForm = <T>(
     formInstance,
     formProps: {
       form: formInstance,
-      name: nanoid(),
       preserve: false,
       ...formProps,
     },
