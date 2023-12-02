@@ -1,8 +1,5 @@
 # Next DMS
 
-## 目標
-
-- 資料管理平台
-- 前後端合一
-- 多使用者(權限)、資料管理、操作記錄
-- 使用 antd
+- A fullstack Data Management System using Next.js(app route) + antd + prisma
+- API endpoint using route handler like classic client-server architecture
+- antd `<ConfigProvider />` on each page(treated as client components)
