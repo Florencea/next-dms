@@ -16,7 +16,7 @@
     "@prisma/client": "^5.7.0",
     "@tanstack/react-query": "^5.13.4",
     "@types/node": "^20.10.4",
-    "@types/react": "^18.2.43",
+    "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.17",
     "ahooks": "^3.7.8",
     "antd": "^5.12.2",
